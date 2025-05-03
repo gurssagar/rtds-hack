@@ -2,8 +2,11 @@
 
 import React, { useState ,useEffect} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { useCompletion } from '@ai-sdk/react';
 const ChatbotForm = () => {
+    const { completion, complete } = useCompletion({
+        api: '/api/completion',
+      });
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     serverLocation: '',
@@ -25,8 +28,8 @@ const ChatbotForm = () => {
          });
      }
      fetchData();
-  })
-  
+  },[])
+
 
   const [isComplete, setIsComplete] = useState(false);
 
@@ -200,6 +203,23 @@ const ChatbotForm = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <div>
+      <button
+        onClick={async () => {
+          await complete(
+            "hey",
+          );
+        }}
+      >
+        Schedule a call
+      </button>
+
+      {completion}
+    </div>
+
+
+
     </div>
   );
 };

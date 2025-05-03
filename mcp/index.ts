@@ -71,7 +71,7 @@ class PricingServer {
             }
 
             // Fetch pricing data from the API
-            const response = await fetch('https://customer.acecloudhosting.com/api/v1/pricing/region-us-east-at-1')
+            const response = await fetch('https://dev-portal.openstack.acecloudhosting.com/api/v1/pricing?region=us-east-at-1')
             if (!response.ok) {
                 throw new Error('Failed to fetch pricing data')
             }
