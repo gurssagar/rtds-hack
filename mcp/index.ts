@@ -12,13 +12,13 @@ import { z } from 'zod'
 
 
 
-class PricingServer {
+class GPURecommendationServer {
     private server: Server
 
     constructor() {
         this.server = new Server(
             {
-                name: 'pricing-server',
+                name: 'gpu-recommendation-server',
                 version: '0.0.1',
             },
             {
@@ -53,8 +53,8 @@ class PricingServer {
         this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
             tools: [
                 {
-                    name: 'get_pricing_context',
-                    description: 'Fetch pricing context from Ace Cloud Hosting API',
+                    name: 'get_gpu_recommendation',
+                    description: 'Fetch recommended GPU instances from Ace Cloud Hosting API',
                     inputSchema: {
                         type: 'object',
                         properties: {},
@@ -66,14 +66,14 @@ class PricingServer {
 
         // Handle tool calls
         this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-            if (request.params.name !== 'get_pricing_context') {
+            if (request.params.name !== 'get_gpu_recommendation') {
                 throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${request.params.name}`)
             }
 
-            // Fetch pricing data from the API
-            const response = await fetch('https://customer.acecloudhosting.com/api/v1/pricing/region-us-east-at-1')
+            // Fetch GPU recommendation data from the API
+            const response = await fetch('https://dev-portal.openstack.acecloudhosting.com/api/v1/pricing?region=us-east-at-1')
             if (!response.ok) {
-                throw new Error('Failed to fetch pricing data')
+                throw new Error('Failed to fetch GPU recommendation data')
             }
             const data = await response.text()
 
@@ -91,9 +91,9 @@ class PricingServer {
     async run(): Promise<void> {
         const transport = new StdioServerTransport()
         await this.server.connect(transport)
-        console.log('Pricing MCP server running on stdio')
+        console.log('GPU Recommendation MCP server running on stdio')
     }
 }
 
-const server = new PricingServer()
+const server = new GPURecommendationServer()
 server.run().catch(console.error)

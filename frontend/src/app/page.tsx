@@ -2,8 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import {useState,useEffect} from 'react';
+
+import '@n8n/chat/style.css';
+import { createChat } from '@n8n/chat';
 import Spline from '@splinetool/react-spline';
 export default function Home() {
+  useEffect(() => {
+		createChat({
+      webhookUrl: 'https://gursagar.app.n8n.cloud/webhook/8575400e-8da1-4320-8c99-bbf3aefe89d6/chat'
+    });
+	}, []);
+  
   return (
     <>
       <div>
@@ -32,9 +41,11 @@ export default function Home() {
           </nav>
           
           <div className="flex items-center ">
-            <button className="bg-blue-600  hover:bg-blue-700 px-4 py-2 rounded-full transition-colors">
-              <a href="/SignIn"> Login </a>
+          <Link href="/SignIn">
+            <button className="bg-white text-black hover:bg-gray-200 px-4 py-2 rounded-full transition-colors">
+              Login 
             </button>
+          </Link>
           </div>
         </div>
 
@@ -47,9 +58,12 @@ export default function Home() {
               and budget constraints.
             </p>
             <div className="flex gap-4">
+              <a href="/SignIn" >
+
               <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full transition-colors">
                 Get Started
               </button>
+              </a>
               <button className="border-2 border-gray-300 hover:bg-gray-100 hover:text-black px-6 py-3 rounded-full transition-colors">
                 Learn More
               </button>
