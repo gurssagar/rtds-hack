@@ -2,102 +2,133 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-light text-gray-800 mb-2 text-center">GPU Optimizer</h1>
+        <p className="text-center text-gray-600 mb-12">Find the perfect GPU instance for your AI workload</p>
+        
+        <div className="bg-white rounded-2xl shadow-sm p-8 backdrop-blur-sm backdrop-filter">
+          <form className="space-y-6">
+            {/* First Row: Model, Dataset, Task Type */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* AI/ML Model Type */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-600">
+                  AI/ML Model Type
+                </label>
+                <select 
+                  className="w-full px-3 py-2 bg-gray-50 border-0 rounded-lg focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-sm"
+                >
+                  <option value="">Select model</option>
+                  <option value="llm">LLM</option>
+                  <option value="cnn">CNN</option>
+                  <option value="gan">GAN</option>
+                  <option value="transformer">Transformer</option>
+                </select>
+              </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+              {/* Dataset Size */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-600">
+                  Dataset Size
+                </label>
+                <div className="relative">
+                  <input 
+                    type="number"
+                    min="0"
+                    className="w-full px-3 py-2 bg-gray-50 border-0 rounded-lg focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-sm"
+                    placeholder="Size in GB"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">GB</span>
+                </div>
+              </div>
+
+              {/* Task Type */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-600">
+                  Task Type
+                </label>
+                <div className="flex gap-1 bg-gray-50 p-1 rounded-lg">
+                  <label className="flex-1">
+                    <input
+                      type="radio"
+                      name="taskType"
+                      value="training"
+                      className="peer hidden"
+                    />
+                    <div className="p-1 text-center rounded-md text-sm cursor-pointer peer-checked:bg-white peer-checked:shadow-sm peer-checked:text-blue-600 transition-all">
+                      Training
+                    </div>
+                  </label>
+                  <label className="flex-1">
+                    <input
+                      type="radio"
+                      name="taskType"
+                      value="inference"
+                      className="peer hidden"
+                    />
+                    <div className="p-1 text-center rounded-md text-sm cursor-pointer peer-checked:bg-white peer-checked:shadow-sm peer-checked:text-blue-600 transition-all">
+                      Inference
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Second Row: Budget and Region */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Budget */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-600">
+                  Budget
+                </label>
+                <div className="flex gap-1">
+                  <div className="relative flex-1">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
+                    <input 
+                      type="number"
+                      min="0"
+                      className="w-full pl-6 pr-2 py-2 bg-gray-50 border-0 rounded-lg focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-sm"
+                      placeholder="Amount"
+                    />
+                  </div>
+                  <select 
+                    className="w-24 px-2 py-2 bg-gray-50 border-0 rounded-lg focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-sm"
+                  >
+                    <option value="hourly">/hr</option>
+                    <option value="monthly">/mo</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Preferred Region */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-600">
+                  Region
+                </label>
+                <select 
+                  className="w-full px-3 py-2 bg-gray-50 border-0 rounded-lg focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-sm"
+                >
+                  <option value="">Select region</option>
+                  <option value="us-east">US East</option>
+                  <option value="us-west">US West</option>
+                  <option value="eu-west">EU West</option>
+                  <option value="eu-central">EU Central</option>
+                  <option value="asia-east">Asia East</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:-translate-y-0.5"
+            >
+              Find Optimal GPU Instance
+            </button>
+          </form>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
