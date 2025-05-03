@@ -2,8 +2,10 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import RegionSelector from "../components/data";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     modelType: "",
     datasetSize: "",
@@ -47,6 +49,9 @@ export default function Home() {
 
     console.log('Form submitted with data:', formData);
 
+    // Save form data to localStorage for the dashboard to use
+    localStorage.setItem('gpuFormData', JSON.stringify(formData));
+
     try {
       // API endpoint URL (from environment variable or hardcoded)
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
@@ -72,8 +77,6 @@ export default function Home() {
       if (response.ok) {
         console.log('Form submission successful');
         setSubmitStatus({ success: true, message: 'Data saved successfully!' });
-        // Optionally reset form
-        // setFormData({ modelType: "", datasetSize: "", taskType: "", budget: "", budgetType: "hourly", region: "" });
       } else {
         console.error('Form submission failed:', result.error || 'Unknown error');
         setSubmitStatus({ success: false, message: result.error || 'Error saving data' });
@@ -84,6 +87,12 @@ export default function Home() {
     } finally {
       setIsSubmitting(false);
       console.log('Form submission process completed');
+      
+      // Always redirect to dashboard after a short delay
+      // In production, you might want to only redirect on successful API calls
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500); // Delay to show the status message
     }
   };
 

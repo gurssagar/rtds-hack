@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -90,7 +90,7 @@ app.get('/api/pricing', async (req, res) => {
     while (retries < MAX_RETRIES) {
       try {
         logger.info(`Fetching pricing data for region: ${region} (attempt ${retries + 1})`);
-        const response = await axios.get('https://customer.acecloudhosting.com/api/v1/pricing', {
+        const response = await axios.get('https://dev-portal.openstack.acecloudhosting.com/api/v1/pricing', {
           params: {
             is_gpu: true,
             resource: 'instances',
@@ -155,6 +155,8 @@ app.get('/api/pricing', async (req, res) => {
     }
   }
 });
+
+// https:localhost:3001/api/pricing?region=us-east-at-1
 
 // API endpoint to save GPU optimizer data
 app.post('/api/save-gpu-data', async (req, res) => {
