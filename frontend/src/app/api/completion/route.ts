@@ -28,6 +28,7 @@ export async function POST(req: Request) {
     const response = await streamText({
       model: google('gemini-2.0-flash'),
       prompt:"Suggest me a gpu with price per hour near to 1 usd",
+      tools,
     });
   
     return response.toDataStreamResponse();
