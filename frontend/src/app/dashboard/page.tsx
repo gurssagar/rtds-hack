@@ -290,130 +290,231 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-black p-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-light text-white">GPU Recommendations</h1>
-          <a 
-            href="/" 
-            className="px-4 py-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 transition-all"
-          >
-            Return to Form
-          </a>
+    <div className="min-h-screen bg-black bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-black to-black p-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col items-center mb-12 relative">
+          <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full opacity-20"></div>
+          <h1 className="text-5xl font-bold text-white mb-3 text-center relative z-10">
+            GPU Recommendations
+          </h1>
+          <p className="text-center text-gray-400 text-lg max-w-2xl">
+            Optimized instances for your AI workload based on your requirements
+          </p>
         </div>
 
         {formData && (
-          <div className="bg-gray-900 rounded-2xl p-6 mb-8 border border-gray-800">
-            <h2 className="text-xl text-gray-300 mb-4">Your Requirements</h2>
+          <div className="bg-gray-900/90 rounded-2xl p-8 mb-10 border border-gray-800/50 backdrop-blur-sm shadow-xl relative overflow-hidden group hover:shadow-blue-900/10 transition-all duration-300">
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl group-hover:bg-blue-600/20 transition-all duration-700"></div>
+            
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl text-gray-100 font-semibold flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019a1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019a1 1 0 01-.285-1.05l1.738-5.42-1.233-.616a1 1 0 01.894-1.79l1.599.8L9 4.323V3a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+                Your Requirements
+              </h2>
+              <div className="bg-blue-900/30 text-blue-300 px-4 py-1.5 rounded-full border border-blue-800/50 text-sm font-medium">
+                {formData.taskType === 'training' ? 'Training Workload' : 'Inference Workload'}
+              </div>
+            </div>
+            
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-black p-4 rounded-lg border border-gray-800">
-                <div className="text-sm text-gray-500">Model Type</div>
-                <div className="text-gray-200 mt-1 font-medium">{formData.modelType.toUpperCase()}</div>
+              <div className="bg-black/60 p-5 rounded-xl border border-gray-800/50 backdrop-blur-md hover:bg-black/70 transition duration-300 hover:border-blue-900/30 hover:shadow-lg group/card">
+                <div className="text-sm text-gray-500 mb-1 flex items-center group-hover/card:text-blue-400 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                  </svg>
+                  Model Type
+                </div>
+                <div className="text-gray-100 font-semibold text-lg">{formData.modelType.toUpperCase()}</div>
               </div>
-              <div className="bg-black p-4 rounded-lg border border-gray-800">
-                <div className="text-sm text-gray-500">Dataset Size</div>
-                <div className="text-gray-200 mt-1 font-medium">{formData.datasetSize} GB</div>
+              
+              <div className="bg-black/60 p-5 rounded-xl border border-gray-800/50 backdrop-blur-md hover:bg-black/70 transition duration-300 hover:border-blue-900/30 hover:shadow-lg group/card">
+                <div className="text-sm text-gray-500 mb-1 flex items-center group-hover/card:text-blue-400 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                  </svg>
+                  Dataset Size
+                </div>
+                <div className="text-gray-100 font-semibold text-lg">
+                  {formData.datasetSize} 
+                  <span className="text-sm text-gray-400 ml-1">GB</span>
+                </div>
               </div>
-              <div className="bg-black p-4 rounded-lg border border-gray-800">
-                <div className="text-sm text-gray-500">Task Type</div>
-                <div className="text-gray-200 mt-1 font-medium capitalize">{formData.taskType}</div>
+              
+              <div className="bg-black/60 p-5 rounded-xl border border-gray-800/50 backdrop-blur-md hover:bg-black/70 transition duration-300 hover:border-blue-900/30 hover:shadow-lg group/card">
+                <div className="text-sm text-gray-500 mb-1 flex items-center group-hover/card:text-blue-400 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  Task Type
+                </div>
+                <div className="text-gray-100 font-semibold text-lg capitalize">{formData.taskType}</div>
               </div>
-              <div className="bg-black p-4 rounded-lg border border-gray-800">
-                <div className="text-sm text-gray-500">Budget</div>
-                <div className="text-gray-200 mt-1 font-medium">${formData.budget}/{formData.budgetType}</div>
+              
+              <div className="bg-black/60 p-5 rounded-xl border border-gray-800/50 backdrop-blur-md hover:bg-black/70 transition duration-300 hover:border-blue-900/30 hover:shadow-lg group/card">
+                <div className="text-sm text-gray-500 mb-1 flex items-center group-hover/card:text-blue-400 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Budget
+                </div>
+                <div className="text-gray-100 font-semibold text-lg">
+                  ${formData.budget}
+                  <span className="text-sm text-gray-400 ml-1">/{formData.budgetType}</span>
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800">
-          <h2 className="text-xl text-gray-300 mb-6">Top Recommended Instances</h2>
-          
-          {isLoading ? (
-            <div className="flex justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-            </div>
-          ) : error ? (
-            <div className="bg-red-900/30 border border-red-800 text-red-300 p-4 rounded-lg">
-              <div className="font-semibold mb-2">Error loading recommendations:</div>
-              <div>{error}</div>
-              <div className="mt-4 text-sm">
-                Using fallback recommendations. You can try refreshing the page to attempt to fetch real-time data again.
+        <div className="bg-gray-900/90 rounded-2xl border border-gray-800/50 backdrop-blur-sm shadow-xl overflow-hidden transition-all duration-300 hover:shadow-blue-900/10">
+          <div className="p-8">
+            <h2 className="text-2xl text-gray-100 font-semibold flex items-center mb-8">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+              Top Recommended Instances
+            </h2>
+            
+            {isLoading ? (
+              <div className="flex flex-col justify-center items-center py-24">
+                <div className="relative w-20 h-20">
+                  <div className="absolute top-0 left-0 w-full h-full border-4 border-blue-500/20 rounded-full"></div>
+                  <div className="absolute top-0 left-0 w-full h-full border-t-4 border-blue-500 rounded-full animate-spin"></div>
+                </div>
+                <p className="mt-6 text-gray-400 animate-pulse">Searching for optimal GPU instances...</p>
               </div>
-            </div>
-          ) : recommendedInstances.length === 0 ? (
-            <div className="bg-yellow-900/30 border border-yellow-800 text-yellow-300 p-4 rounded-lg">
-              No GPU instances found that match your requirements. Try adjusting your criteria and try again.
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {recommendedInstances.map((instance) => (
-                <div 
-                  key={instance.id} 
-                  className="bg-black rounded-xl p-4 border border-gray-800 hover:border-blue-700 transition-all"
-                >
-                  <div className="flex flex-col md:flex-row md:items-center">
-                    <div className="flex-1">
-                      <div className="flex items-center">
-                        <span className="text-xl font-medium text-white">{instance.resource_name}</span>
-                        <span className="ml-3 px-2 py-1 bg-blue-900 text-blue-300 rounded-md text-xs">
-                          {instance.provider}
-                        </span>
-                      </div>
-                      <div className="mt-2 text-gray-400">
-                        {instance.gpuType} • {instance.ram} GB RAM • {instance.vcpus} vCPUs
-                      </div>
-                      <div className="mt-1 text-gray-500 text-xs">
-                        Region: {instance.region}
-                      </div>
+            ) : error ? (
+              <div className="bg-red-900/30 border border-red-800/50 text-red-300 p-6 rounded-xl">
+                <div className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3 text-red-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <div className="font-semibold mb-2">Error loading recommendations:</div>
+                    <div>{error}</div>
+                    <div className="mt-4 text-sm opacity-80">
+                      Using fallback recommendations. You can try refreshing the page to attempt to fetch real-time data again.
                     </div>
-                    
-                    <div className="mt-4 md:mt-0 flex items-center gap-4">
-                      <div className="text-right">
-                        <div className="text-sm text-gray-400">Price</div>
-                        <div className="text-xl font-medium text-white">
-                          {instance.currency === 'USD' ? '$' : instance.currency + ' '}
-                          {formData?.budgetType === 'monthly' && instance.price_per_month 
-                            ? instance.price_per_month.toFixed(2) 
-                            : instance.price_per_hour.toFixed(2)}
-                          /{formData?.budgetType || 'hr'}
+                  </div>
+                </div>
+              </div>
+            ) : recommendedInstances.length === 0 ? (
+              <div className="bg-yellow-900/30 border border-yellow-800/50 text-yellow-300 p-6 rounded-xl">
+                <div className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3 text-yellow-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <div>
+                    No GPU instances found that match your requirements. Try adjusting your criteria and try again.
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {recommendedInstances.map((instance, index) => (
+                  <div 
+                    key={instance.id} 
+                    className={`bg-black/70 rounded-xl p-6 border border-gray-800 hover:border-blue-700/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/10 relative overflow-hidden group ${index === 0 ? 'ring-2 ring-blue-500/30 shadow-lg shadow-blue-900/10' : ''}`}
+                  >
+                    {index === 0 && (
+                      <div className="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">
+                        BEST MATCH
+                      </div>
+                    )}
+                    <div className="flex flex-col md:flex-row md:items-center">
+                      <div className="flex-1">
+                        <div className="flex items-center">
+                          <span className="text-xl font-medium text-white">{instance.resource_name}</span>
+                          <span className="ml-3 px-2.5 py-1 bg-blue-800 text-blue-200 rounded-md text-xs font-medium">
+                            {instance.provider}
+                          </span>
+                        </div>
+                        <div className="mt-3 text-gray-300 flex flex-wrap gap-3">
+                          <span className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            {instance.gpuType}
+                          </span>
+                          <span className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            {instance.ram} GB RAM
+                          </span>
+                          <span className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                            </svg>
+                            {instance.vcpus} vCPUs
+                          </span>
+                        </div>
+                        <div className="mt-3 text-gray-500 text-xs flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          Region: {instance.region}
                         </div>
                       </div>
                       
-                      <div className="relative h-14 w-14 flex items-center justify-center">
-                        <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 36 36">
-                          <circle cx="18" cy="18" r="16" fill="none" className="stroke-gray-800" strokeWidth="4"></circle>
-                          <circle
-                            cx="18"
-                            cy="18"
-                            r="16"
-                            fill="none"
-                            className="stroke-blue-600"
-                            strokeWidth="4"
-                            strokeDasharray={`${instance.performance} 100`}
-                          ></circle>
-                        </svg>
-                        <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white">
-                          {instance.performance}%
+                      <div className="mt-6 md:mt-0 flex items-center gap-6">
+                        <div className="text-right">
+                          <div className="text-sm text-blue-400 font-medium">Price</div>
+                          <div className="text-2xl font-medium text-white mt-1 flex items-center justify-end">
+                            <span className="text-lg text-blue-300 mr-1">{instance.currency === 'USD' ? '$' : instance.currency}</span>
+                            <span>
+                              {formData?.budgetType === 'monthly' && instance.price_per_month 
+                                ? instance.price_per_month.toFixed(2) 
+                                : instance.price_per_hour.toFixed(2)}
+                            </span>
+                            <span className="text-sm text-gray-400 ml-1">/{formData?.budgetType || 'hr'}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="relative h-16 w-16 flex items-center justify-center">
+                          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="16" fill="none" className="stroke-gray-800" strokeWidth="3"></circle>
+                            <circle
+                              cx="18"
+                              cy="18"
+                              r="16"
+                              fill="none"
+                              className="stroke-blue-600"
+                              strokeWidth="3"
+                              strokeLinecap="round"
+                              strokeDasharray={`${instance.performance} 100`}
+                            ></circle>
+                          </svg>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <div className="text-lg font-medium text-white">
+                              {instance.performance}%
+                            </div>
+                            <div className="text-xs text-blue-400 -mt-0.5">
+                              Performance
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-          
-          <div className="mt-8 p-4 bg-blue-900/20 rounded-lg border border-blue-800/50">
-            <div className="flex items-start gap-3">
-              <div className="text-blue-300 p-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                </svg>
+                ))}
               </div>
-              <div className="text-sm text-blue-300">
-                <p>These recommendations are based on your requirements and our analysis of current GPU instance performance for the specified workload type.</p>
-                <p className="mt-1">For more detailed comparisons and cost optimization, contact our team.</p>
+            )}
+            
+            <div className="mt-8 p-5 bg-blue-900/20 rounded-lg border border-blue-800/30">
+              <div className="flex items-start gap-3">
+                <div className="text-blue-300 p-1 bg-blue-900/30 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="text-sm text-blue-200">
+                  <p>These recommendations are based on your requirements and our analysis of current GPU instance performance for the specified workload type.</p>
+                  <p className="mt-1">For more detailed comparisons and cost optimization, contact our team.</p>
+                </div>
               </div>
             </div>
           </div>
