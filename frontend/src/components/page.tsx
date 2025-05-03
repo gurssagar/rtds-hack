@@ -98,27 +98,27 @@ export default function RegionSelector({ value, onChange }: RegionSelectorProps)
 
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium text-gray-600">
+      <label className="text-sm font-medium text-gray-300 tracking-wide">
         Region
       </label>
-      <div className="relative">
+      <div className="relative group">
         <input
           type="text"
-          className="w-full px-4 py-2 bg-gray-50 border-0 rounded-lg focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all text-sm"
+          className="w-full px-4 py-3 bg-black/50 border border-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:outline-none transition-all duration-300 text-sm text-gray-200 hover:border-blue-500/50 group-hover:shadow-lg group-hover:shadow-blue-500/5"
           placeholder="Search regions..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className="mt-2 max-h-[300px] overflow-y-auto rounded-lg">
+      <div className="mt-2 max-h-[300px] overflow-y-auto rounded-xl bg-gradient-to-b from-gray-900/90 to-black/90 backdrop-blur-xl backdrop-filter border border-gray-800 shadow-blue-500/5 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-black/20 [&::-webkit-scrollbar-thumb]:bg-blue-900/50 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-blue-800/50">
         {filteredRegions.map((region) => (
           <button
             key={region.id}
             type="button"
-            className={`flex items-center gap-3 p-4 w-full transition-all ${
+            className={`flex items-center gap-3 p-4 w-full transition-all duration-300 ${
               value === region.id
-                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-500'
-                : 'bg-white hover:bg-gray-50 border-l-4 border-transparent'
+                ? 'bg-gradient-to-br from-black/50 to-gray-900/50 border-l-4 border-blue-500 text-blue-400'
+                : 'hover:bg-gradient-to-br from-black/30 to-gray-900/30 border-l-4 border-transparent text-gray-300 hover:text-white'
             }`}
             onClick={() => onChange(region.id)}
           >
@@ -133,7 +133,7 @@ export default function RegionSelector({ value, onChange }: RegionSelectorProps)
             />
             <div className="text-left flex-1">
               <div className="text-sm font-medium">{region.country}</div>
-              <div className="text-xs text-gray-500 mt-0.5">
+              <div className="text-xs text-gray-400 mt-0.5">
                 {region.name} • {region.timezone}
               </div>
             </div>

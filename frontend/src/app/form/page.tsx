@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    modelType: "",
     datasetSize: "",
     taskType: "",
     budget: "",
@@ -94,66 +93,54 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black p-8">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-blue-900/30 p-8">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-4xl font-light text-white mb-2 text-center">GPU Optimizer</h1>
-        <p className="text-center text-gray-400 mb-12">Find the perfect GPU instance for your AI workload</p>
+        <h1 className="text-6xl font-extralight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 mb-3 text-center tracking-tight">
+          GPU Optimizer
+        </h1>
+        <p className="text-center text-gray-400 mb-12 text-lg font-light tracking-wide">
+          Find the perfect GPU instance for your AI workload
+        </p>
         
-        <div className="bg-gray-900 rounded-2xl shadow-lg p-8 backdrop-blur-sm backdrop-filter border border-gray-800">
+        <div className="bg-gradient-to-b from-gray-900/90 to-black/90 rounded-3xl shadow-2xl p-10 backdrop-blur-xl backdrop-filter border border-gray-800 shadow-blue-500/5">
           {submitStatus && (
-            <div className={`mb-6 p-4 rounded-lg ${submitStatus.success ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'}`}>
+            <div className={`mb-6 p-4 rounded-xl backdrop-blur-lg ${
+              submitStatus.success 
+                ? 'bg-green-900/30 text-green-300 border border-green-700/50' 
+                : 'bg-red-900/30 text-red-300 border border-red-700/50'
+            }`}>
               {submitStatus.message}
             </div>
           )}
           
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* AI/ML Model Type */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">
-                AI/ML Model Type
-              </label>
-              <select 
-                name="modelType"
-                value={formData.modelType}
-                onChange={handleChange}
-                className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
-                required
-              >
-                <option value="">Select model</option>
-                <option value="llm">LLM</option>
-                <option value="cnn">CNN</option>
-                <option value="gan">GAN</option>
-                <option value="transformer">Transformer</option>
-              </select>
-            </div>
-
+          <form className="space-y-8" onSubmit={handleSubmit}>
             {/* Dataset Size */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-gray-300 tracking-wide">
                 Dataset Size
               </label>
-              <div className="relative">
+              <div className="relative group">
                 <input 
                   type="number"
                   min="0"
                   name="datasetSize"
                   value={formData.datasetSize}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
+                  className="w-full px-4 py-3 bg-black/50 border border-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:outline-none transition-all duration-300 text-sm text-gray-200 hover:border-blue-500/50 group-hover:shadow-lg group-hover:shadow-blue-500/5"
                   placeholder="Size in GB"
                   required
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">GB</span>
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-light">GB</span>
               </div>
             </div>
 
             {/* Task Type */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-gray-300 tracking-wide">
                 Task Type
               </label>
-              <div className="flex gap-2">
-                <label className="flex-1 flex items-center p-3 bg-black border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-900 transition-all">
+              <div className="flex gap-4">
+                <label className="flex-1 flex items-center p-4 bg-gradient-to-br from-black/50 to-gray-900/50 border border-gray-800 rounded-xl cursor-pointer hover:bg-gray-900/50 transition-all duration-300 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/5">
                   <input
                     type="radio"
                     name="taskType"
@@ -163,11 +150,11 @@ export default function Home() {
                     className="hidden peer"
                     required
                   />
-                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400">
+                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400 font-medium tracking-wide">
                     Training
                   </div>
                 </label>
-                <label className="flex-1 flex items-center p-3 bg-black border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-900 transition-all">
+                <label className="flex-1 flex items-center p-4 bg-gradient-to-br from-black/50 to-gray-900/50 border border-gray-800 rounded-xl cursor-pointer hover:bg-gray-900/50 transition-all duration-300 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/5">
                   <input
                     type="radio"
                     name="taskType"
@@ -177,7 +164,7 @@ export default function Home() {
                     className="hidden peer"
                     required
                   />
-                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400">
+                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400 font-medium tracking-wide">
                     Inference
                   </div>
                 </label>
@@ -185,20 +172,20 @@ export default function Home() {
             </div>
 
             {/* Budget */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-gray-300 tracking-wide">
                 Budget
               </label>
-              <div className="flex flex-col gap-2">
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
+              <div className="flex flex-col gap-3">
+                <div className="relative group">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-light">$</span>
                   <input 
                     type="number"
                     min="0"
                     name="budget"
                     value={formData.budget}
                     onChange={handleChange}
-                    className="w-full pl-6 pr-2 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
+                    className="w-full pl-8 pr-3 py-3 bg-black/50 border border-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:outline-none transition-all duration-300 text-sm text-gray-200 hover:border-blue-500/50 group-hover:shadow-lg group-hover:shadow-blue-500/5"
                     placeholder="Amount"
                     required
                   />
@@ -207,10 +194,10 @@ export default function Home() {
                   name="budgetType"
                   value={formData.budgetType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
+                  className="w-full px-4 py-3 bg-black/50 border border-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:outline-none transition-all duration-300 text-base text-white hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/5"
                 >
-                  <option value="hourly">/hr</option>
-                  <option value="monthly">/mo</option>
+                  <option value="hourly" className="text-black bg-white">/hr</option>
+                  <option value="monthly" className="text-black bg-white">/mo</option>
                 </select>
               </div>
             </div>
@@ -225,7 +212,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white py-3 px-6 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:-translate-y-0.5 disabled:opacity-70"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-70 text-sm font-medium mt-6 shadow-lg shadow-blue-500/20"
             >
               {isSubmitting ? 'Saving...' : 'Find Optimal GPU Instance'}
             </button>
