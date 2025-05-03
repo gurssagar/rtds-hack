@@ -152,77 +152,11 @@ export default function Dashboard() {
       return getFallbackInstances();
     }
     
-    // Handle case where userData might be null
-    if (!userData) {
-      console.warn('User data is null or undefined, using default filtering');
-      userData = {
-        budget: 1000,
-        budgetType: 'hourly',
-        datasetSize: 0
-      };
-    }
-    
     console.log('Raw instance data example:', instances[0]);
+    console.log(`Total instances received from API: ${instances.length}`);
     
-    // Filter instances based on user requirements
-    let filteredInstances = instances.filter(instance => {
-      // Ensure basic required properties exist
-      if (!instance.resource_name || 
-          !instance.vcpus || 
-          !instance.ram || 
-          (instance.price_per_hour === undefined && instance.price_per_month === undefined)) {
-        return false;
-      }
-      
-      // Filter by budget if specified
-      if (userData.budget) {
-        const budget = parseFloat(userData.budget);
-        const price = userData.budgetType === 'monthly' 
-          ? (instance.price_per_month || instance.price_per_hour * 720) // approx hrs in a month 
-          : (instance.price_per_hour || instance.price_per_month / 720);
-          
-        if (price > budget) return false;
-      }
-      
-      // Filter by required RAM based on dataset size
-      const datasetSize = parseFloat(userData.datasetSize || '0');
-      if (datasetSize && instance.ram < datasetSize) return false;
-      
-      return true;
-    });
-    
-    console.log(`Filtered from ${instances.length} to ${filteredInstances.length} instances based on criteria`);
-    
-    if (filteredInstances.length === 0) {
-      console.warn('No instances match criteria, returning fallbacks');
-      return getFallbackInstances();
-    }
-    
-    // Sort instances by price (ascending) and ram (descending) for best value
-    filteredInstances.sort((a, b) => {
-      // First prioritize by price
-      const priceA = userData.budgetType === 'monthly' 
-        ? (a.price_per_month || a.price_per_hour * 720) 
-        : (a.price_per_hour || a.price_per_month / 720);
-        
-      const priceB = userData.budgetType === 'monthly' 
-        ? (b.price_per_month || b.price_per_hour * 720) 
-        : (b.price_per_hour || b.price_per_month / 720);
-      
-      if (priceA !== priceB) {
-        return priceA - priceB;
-      }
-      
-      // Then by RAM
-      return b.ram - a.ram;
-    });
-    
-    // Take top 3 instances
-    const topInstances = filteredInstances.slice(0, 3);
-    console.log('Top instances:', topInstances);
-    
-    // Map to our GpuInstance interface
-    return topInstances.map((instance, index) => {
+    // Map to our GpuInstance interface without filtering
+    return instances.map((instance, index) => {
       // Generate a performance score based on ram and vcpus (just for display purposes)
       const performance = Math.min(95, 60 + (instance.ram / 10) + (instance.vcpus / 2));
       
@@ -370,12 +304,16 @@ export default function Dashboard() {
 
         <div className="bg-gray-900/90 rounded-2xl border border-gray-800/50 backdrop-blur-sm shadow-xl overflow-hidden transition-all duration-300 hover:shadow-blue-900/10">
           <div className="p-8">
-            <h2 className="text-2xl text-gray-100 font-semibold flex items-center mb-8">
+            <h2 className="text-2xl text-gray-100 font-semibold flex items-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
               </svg>
-              Top Recommended Instances
+              All GPU Instances <span className="ml-2 text-sm text-gray-400">({recommendedInstances.length} found)</span>
             </h2>
+            
+            <div className="mb-4 text-gray-400 text-sm">
+              Showing all available instances without filtering
+            </div>
             
             {isLoading ? (
               <div className="flex flex-col justify-center items-center py-24">
@@ -412,89 +350,64 @@ export default function Dashboard() {
                 </div>
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {recommendedInstances.map((instance, index) => (
                   <div 
                     key={instance.id} 
-                    className={`bg-black/70 rounded-xl p-6 border border-gray-800 hover:border-blue-700/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/10 relative overflow-hidden group ${index === 0 ? 'ring-2 ring-blue-500/30 shadow-lg shadow-blue-900/10' : ''}`}
+                    className={`bg-black/70 rounded-xl p-5 border border-gray-800 hover:border-blue-700/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/10 relative overflow-hidden group`}
                   >
-                    {index === 0 && (
-                      <div className="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">
-                        BEST MATCH
-                      </div>
-                    )}
                     <div className="flex flex-col md:flex-row md:items-center">
                       <div className="flex-1">
                         <div className="flex items-center">
-                          <span className="text-xl font-medium text-white">{instance.resource_name}</span>
-                          <span className="ml-3 px-2.5 py-1 bg-blue-800 text-blue-200 rounded-md text-xs font-medium">
+                          <span className="text-lg font-medium text-white">{instance.resource_name}</span>
+                          <span className="ml-3 px-2 py-0.5 bg-blue-800 text-blue-200 rounded-md text-xs font-medium">
                             {instance.provider}
                           </span>
                         </div>
-                        <div className="mt-3 text-gray-300 flex flex-wrap gap-3">
+                        <div className="mt-2 text-gray-300 flex flex-wrap gap-2 text-sm">
                           <span className="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                             {instance.gpuType}
                           </span>
                           <span className="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                             {instance.ram} GB RAM
                           </span>
                           <span className="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                             </svg>
                             {instance.vcpus} vCPUs
                           </span>
-                        </div>
-                        <div className="mt-3 text-gray-500 text-xs flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          Region: {instance.region}
+                          <span className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            {instance.region}
+                          </span>
                         </div>
                       </div>
                       
-                      <div className="mt-6 md:mt-0 flex items-center gap-6">
+                      <div className="mt-3 md:mt-0 flex items-center gap-4">
+                        <div className="flex items-center gap-1 bg-gray-800/50 px-2 py-1 rounded text-xs">
+                          <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+                          <span>{instance.performance}%</span>
+                        </div>
+                        
                         <div className="text-right">
-                          <div className="text-sm text-blue-400 font-medium">Price</div>
-                          <div className="text-2xl font-medium text-white mt-1 flex items-center justify-end">
-                            <span className="text-lg text-blue-300 mr-1">{instance.currency === 'USD' ? '$' : instance.currency}</span>
+                          <div className="text-lg font-medium text-white flex items-center justify-end">
+                            <span className="text-sm text-blue-300 mr-1">{instance.currency === 'USD' ? '$' : instance.currency}</span>
                             <span>
                               {formData?.budgetType === 'monthly' && instance.price_per_month 
                                 ? instance.price_per_month.toFixed(2) 
                                 : instance.price_per_hour.toFixed(2)}
                             </span>
-                            <span className="text-sm text-gray-400 ml-1">/{formData?.budgetType || 'hr'}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="relative h-16 w-16 flex items-center justify-center">
-                          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="16" fill="none" className="stroke-gray-800" strokeWidth="3"></circle>
-                            <circle
-                              cx="18"
-                              cy="18"
-                              r="16"
-                              fill="none"
-                              className="stroke-blue-600"
-                              strokeWidth="3"
-                              strokeLinecap="round"
-                              strokeDasharray={`${instance.performance} 100`}
-                            ></circle>
-                          </svg>
-                          <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <div className="text-lg font-medium text-white">
-                              {instance.performance}%
-                            </div>
-                            <div className="text-xs text-blue-400 -mt-0.5">
-                              Performance
-                            </div>
+                            <span className="text-xs text-gray-400 ml-1">/{formData?.budgetType || 'hr'}</span>
                           </div>
                         </div>
                       </div>

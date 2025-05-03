@@ -110,117 +110,117 @@ export default function Home() {
           )}
           
           <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* AI/ML Model Type */}
-            <div className="space-y-2">
+              {/* AI/ML Model Type */}
+              <div className="space-y-2">
               <label className="text-sm font-medium text-gray-300">
-                AI/ML Model Type
-              </label>
-              <select 
-                name="modelType"
-                value={formData.modelType}
-                onChange={handleChange}
-                className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
-                required
-              >
-                <option value="">Select model</option>
-                <option value="llm">LLM</option>
-                <option value="cnn">CNN</option>
-                <option value="gan">GAN</option>
-                <option value="transformer">Transformer</option>
-              </select>
-            </div>
-
-            {/* Dataset Size */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">
-                Dataset Size
-              </label>
-              <div className="relative">
-                <input 
-                  type="number"
-                  min="0"
-                  name="datasetSize"
-                  value={formData.datasetSize}
+                  AI/ML Model Type
+                </label>
+                <select 
+                  name="modelType"
+                  value={formData.modelType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
-                  placeholder="Size in GB"
+                className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
                   required
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">GB</span>
+                >
+                  <option value="">Select model</option>
+                  <option value="llm">LLM</option>
+                  <option value="cnn">CNN</option>
+                  <option value="gan">GAN</option>
+                  <option value="transformer">Transformer</option>
+                </select>
               </div>
-            </div>
 
-            {/* Task Type */}
-            <div className="space-y-2">
+              {/* Dataset Size */}
+              <div className="space-y-2">
               <label className="text-sm font-medium text-gray-300">
-                Task Type
-              </label>
-              <div className="flex gap-2">
-                <label className="flex-1 flex items-center p-3 bg-black border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-900 transition-all">
-                  <input
-                    type="radio"
-                    name="taskType"
-                    value="training"
-                    checked={formData.taskType === "training"}
-                    onChange={handleRadioChange}
-                    className="hidden peer"
-                    required
-                  />
-                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400">
-                    Training
-                  </div>
+                  Dataset Size
                 </label>
-                <label className="flex-1 flex items-center p-3 bg-black border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-900 transition-all">
-                  <input
-                    type="radio"
-                    name="taskType"
-                    value="inference"
-                    checked={formData.taskType === "inference"}
-                    onChange={handleRadioChange}
-                    className="hidden peer"
-                    required
-                  />
-                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400">
-                    Inference
-                  </div>
-                </label>
-              </div>
-            </div>
-
-            {/* Budget */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">
-                Budget
-              </label>
-              <div className="flex flex-col gap-2">
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
                   <input 
                     type="number"
                     min="0"
-                    name="budget"
-                    value={formData.budget}
+                    name="datasetSize"
+                    value={formData.datasetSize}
                     onChange={handleChange}
-                    className="w-full pl-6 pr-2 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
-                    placeholder="Amount"
+                  className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
+                    placeholder="Size in GB"
                     required
                   />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">GB</span>
                 </div>
-                <select 
-                  name="budgetType"
-                  value={formData.budgetType}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
-                >
-                  <option value="hourly">/hr</option>
-                  <option value="monthly">/mo</option>
-                </select>
+              </div>
+
+              {/* Task Type */}
+              <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300">
+                  Task Type
+                </label>
+              <div className="flex gap-2">
+                <label className="flex-1 flex items-center p-3 bg-black border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-900 transition-all">
+                    <input
+                      type="radio"
+                      name="taskType"
+                      value="training"
+                      checked={formData.taskType === "training"}
+                      onChange={handleRadioChange}
+                    className="hidden peer"
+                      required
+                    />
+                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400">
+                      Training
+                    </div>
+                  </label>
+                <label className="flex-1 flex items-center p-3 bg-black border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-900 transition-all">
+                    <input
+                      type="radio"
+                      name="taskType"
+                      value="inference"
+                      checked={formData.taskType === "inference"}
+                      onChange={handleRadioChange}
+                    className="hidden peer"
+                      required
+                    />
+                  <div className="w-full text-center text-gray-300 peer-checked:text-blue-400">
+                      Inference
+                    </div>
+                  </label>
               </div>
             </div>
 
+              {/* Budget */}
+              <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300">
+                  Budget
+                </label>
+              <div className="flex flex-col gap-2">
+                <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
+                    <input 
+                      type="number"
+                      min="0"
+                      name="budget"
+                      value={formData.budget}
+                      onChange={handleChange}
+                    className="w-full pl-6 pr-2 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
+                      placeholder="Amount"
+                      required
+                    />
+                  </div>
+                  <select 
+                    name="budgetType"
+                    value={formData.budgetType}
+                    onChange={handleChange}
+                  className="w-full px-3 py-2 bg-black border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all text-sm text-gray-200"
+                  >
+                    <option value="hourly">/hr</option>
+                    <option value="monthly">/mo</option>
+                  </select>
+                </div>
+              </div>
+
             {/* Region Selector */}
             <RegionSelector 
-              value={formData.region}
+                  value={formData.region}
               onChange={handleRegionChange}
             />
 
