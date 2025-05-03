@@ -58,3 +58,7 @@ This project contains both a backend and a frontend application.
     ```
 
 4.  Open your browser and navigate to [http://localhost:3000](http://localhost:3000) (or the port specified in the console output).
+
+Video Link 
+
+https://drive.google.com/file/d/1jteuKjUr5wrJ5kLJKD-RXTWf3gouIXX0/view?usp=sharing
