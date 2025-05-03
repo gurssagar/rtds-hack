@@ -2,8 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import {useState,useEffect} from 'react';
+
+import '@n8n/chat/style.css';
+import { createChat } from '@n8n/chat';
 import Spline from '@splinetool/react-spline';
 export default function Home() {
+  useEffect(() => {
+		createChat({
+      webhookUrl: 'https://gursagar.app.n8n.cloud/webhook/8575400e-8da1-4320-8c99-bbf3aefe89d6/chat'
+    });
+	}, []);
+  
   return (
     <>
       <div>
